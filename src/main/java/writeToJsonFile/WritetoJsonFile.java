@@ -23,11 +23,14 @@ public class WritetoJsonFile {
 	//transactions json array
 	public JSONArray transactions = new JSONArray();
 	
+	int idcounter = 0;
+	
 	@SuppressWarnings("unchecked")
 	public void WriteJSONFile(JSONArray test,ArrayList<StructType> val,String CName,List<String> opcodes,List<String> bytecodes)
 	{
 		Iterator<StructType> iter = val.iterator(); 
 		
+		System.out.println(iter);
 		JSONArray _bytearradd = new JSONArray();
 		while(iter.hasNext())
 		{
@@ -76,6 +79,9 @@ public class WritetoJsonFile {
 
 			//unixTime created for timestamp
 			long unixTime = System.currentTimeMillis() / 1000L;
+			
+			transactionObject.put("id", idcounter);
+			idcounter++;
 			
 			//time stamp value is added
 			transactionObject.put("timestamp", Objects.toString(unixTime));
@@ -191,7 +197,7 @@ public class WritetoJsonFile {
 		
 	}
 	@SuppressWarnings("unchecked")
-	public void FinalWrite(JSONArray test,String output_file,String sourcecode) {
+	public void FinalWrite(JSONArray test,String output_file) {
 		
 		JSONObject abiobject = new JSONObject();
 		abiobject.put("12345687954689451d564ad5132", test);
@@ -200,7 +206,7 @@ public class WritetoJsonFile {
 		//transactions array added to general object
 		obj.put("transactions", transactions);
 		obj.put("abis", abiobject);
-		obj.put("sourcecode",sourcecode);
+		//obj.put("sourcecode",sourcecode);
 		//Write JSON file
     	try (FileWriter file = new FileWriter(output_file)) {
 

@@ -54,21 +54,21 @@ public class ReadJSONExample
 		Path opcodesPath =Paths.get(args[2]);
 		Path bytecodesPath = Paths.get(args[3]);
 		String output_file = args[4];
-		Path sourcecode = Paths.get(args[5]);
+		//Path sourcecode = Paths.get(args[5]);
 		
 		try (FileReader reader = new FileReader(fileName))
 		{
 			
 			List<String> opcodes = Files.readAllLines(opcodesPath);
 			List<String> bytecodes = Files.readAllLines(bytecodesPath);
-			List<String> _sourcecode = Files.readAllLines(sourcecode);
+			//List<String> _sourcecode = Files.readAllLines(sourcecode);
 			
-			StringBuilder sb = new StringBuilder();
+			/*StringBuilder sb = new StringBuilder();
 			for (String s : _sourcecode)
 			{
 			    sb.append(s);
 			    sb.append("\n");
-			}
+			}*/
 			
 			
 			//Read JSON file
@@ -143,7 +143,7 @@ public class ReadJSONExample
 			//inputList.clear();
             }
           
-            _writeJson.FinalWrite(abiListRef,output_file,sb.toString());
+            _writeJson.FinalWrite(abiListRef,output_file);
             //Iterate over array
             /*abiList.forEach( inp -> parseObjectInputs( (JSONObject) inp ) );
             abiList.forEach( _fType -> parseFunctionType( (JSONObject) _fType ) );
