@@ -21,8 +21,6 @@ public class StringGenerator {
 	        buffer.append((char) randomLimitedInt);
 	    }
 	    String generatedString = buffer.toString();
-	 
-	    System.out.println(generatedString);
 	    return generatedString;
 	}
 	

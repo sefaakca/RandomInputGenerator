@@ -30,7 +30,6 @@ public class WritetoJsonFile {
 	{
 		Iterator<StructType> iter = val.iterator(); 
 		
-		System.out.println(iter);
 		JSONArray _bytearradd = new JSONArray();
 		while(iter.hasNext())
 		{
@@ -111,9 +110,6 @@ public class WritetoJsonFile {
 			{
 				if(stt.getInpType().get(k).contains("byte"))
 				{
-					/*System.out.println("BURDA");
-					System.out.println(stt.getinpValues().get(k));
-					System.out.println(stt.getInpType().get(k));*/
 					for(int i =0;i<stt.byteint.size();i++)
 					{
 						String prs2str = Integer.toString(stt.byteint.get(i));
@@ -185,11 +181,7 @@ public class WritetoJsonFile {
 				transactions.add(transactionObject);
 			//TransactionObject is added to Transactions Array
 			
-			//recordDetails2.clear();
-			
-			
-				
-			str="(";//json.getJSONObject("LabelData").getString("slogan");
+			str="(";
 		}
 		
 
@@ -206,12 +198,13 @@ public class WritetoJsonFile {
 		//transactions array added to general object
 		obj.put("transactions", transactions);
 		obj.put("abis", abiobject);
-		//obj.put("sourcecode",sourcecode);
+		
 		//Write JSON file
     	try (FileWriter file = new FileWriter(output_file)) {
 
             file.write(obj.toJSONString());
             file.flush();
+            System.out.println("INPUT FILE IS CREATED");
 
         } catch (IOException e) {
             e.printStackTrace();

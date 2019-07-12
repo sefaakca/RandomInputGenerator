@@ -2,7 +2,7 @@ pragma solidity >=0.4.25 <0.6.0;
 
 contract Test{
     uint globalvar=0;
-    constructor()
+    constructor()public
     {
         uint test=10+block.timestamp;
     }
@@ -26,7 +26,7 @@ contract Test{
             y= y-x;
     }
     
-    function()public{
+    function()external{
         globalvar=10;
     }
 

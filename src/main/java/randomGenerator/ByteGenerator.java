@@ -24,24 +24,15 @@ public class ByteGenerator {
 			bytes= new byte[10];
 		}
 		try {
-			//SecureRandom.getInstanceStrong().nextBytes(bytes);
+			
 			random.nextBytes(bytes);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(bytes);
 		return bytes;
 	}
-	/*public byte byteGeneratorNew(String _type)
-	{
-		byte b;
-		b =(byte) random.nextInt();
-		System.out.println(b);
-		return b;
-		
-	}*/
 	
 	public int[] byteGeneratorNew(String _type)
 	{

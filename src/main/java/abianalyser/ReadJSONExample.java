@@ -54,21 +54,13 @@ public class ReadJSONExample
 		Path opcodesPath =Paths.get(args[2]);
 		Path bytecodesPath = Paths.get(args[3]);
 		String output_file = args[4];
-		//Path sourcecode = Paths.get(args[5]);
 		
 		try (FileReader reader = new FileReader(fileName))
 		{
 			
 			List<String> opcodes = Files.readAllLines(opcodesPath);
 			List<String> bytecodes = Files.readAllLines(bytecodesPath);
-			//List<String> _sourcecode = Files.readAllLines(sourcecode);
-			
-			/*StringBuilder sb = new StringBuilder();
-			for (String s : _sourcecode)
-			{
-			    sb.append(s);
-			    sb.append("\n");
-			}*/
+
 			
 			
 			//Read JSON file
@@ -82,7 +74,6 @@ public class ReadJSONExample
             }
             
             Collections.sort( jsonValues, new Comparator<JSONObject>() {
-                //You can change "Name" with "ID" if you want to sort by ID
                 private static final String KEY_NAME = "type";
 
                 @Override
@@ -99,23 +90,18 @@ public class ReadJSONExample
                     }
 
                     return valA.compareTo(valB);
-                    //if you want to change the sort order, simply use the following:
-                    //return -valA.compareTo(valB);
                 }
             });
             for (int i = 0; i < abiList.size(); i++) {
             	abiListRef.add(jsonValues.get(i));
             }
 
-            System.out.println("abiListRef");
-            System.out.println(abiListRef);
             for(int test=0;test<20;test++) {
 	            for(int i=0;i<abiListRef.size();i++)
 	            {
 	            	JSONObject teststst= (JSONObject)abiListRef.get(i);
 	            	if(teststst.get("type").equals("constructor")&& test==0) {
-		            	System.out.println("CONSTRUCTOR GELDI");
-		            	System.out.println(abiListRef.get(i));
+
 		            	parseObjectInputs(((JSONObject)abiListRef.get(i)));
 		            	parseFunctionType(((JSONObject)abiListRef.get(i)));
 		            	parseFunctionName(((JSONObject)abiListRef.get(i)));
@@ -126,8 +112,6 @@ public class ReadJSONExample
 						st.clear();
 						inputList.clear();
 	            	} else if(!teststst.get("type").equals("constructor")) {
-		            	System.out.println("CONSTRUCTOR DEGIL");
-		            	System.out.println(abiListRef.get(i));
 		            	parseObjectInputs(((JSONObject)abiListRef.get(i)));
 		            	parseFunctionType(((JSONObject)abiListRef.get(i)));
 		            	parseFunctionName(((JSONObject)abiListRef.get(i)));
@@ -139,19 +123,12 @@ public class ReadJSONExample
 						inputList.clear();
 	            	}
 	            }
-            //st.clear();
-			//inputList.clear();
             }
           
             _writeJson.FinalWrite(abiListRef,output_file);
-            //Iterate over array
-            /*abiList.forEach( inp -> parseObjectInputs( (JSONObject) inp ) );
-            abiList.forEach( _fType -> parseFunctionType( (JSONObject) _fType ) );
-            abiList.forEach(_fName -> parseFunctionName((JSONObject) _fName));*/
+
             
             System.out.println(contractName);
-			 /*inputList.add(st);
-				_writeJson.WriteJSONFile(abiListRef,inputList);*/
             
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -170,8 +147,6 @@ public class ReadJSONExample
 			Boolean btype=true;
 			if(inputsObject!=null &&!inputsObject.isEmpty())
 			{
-				System.out.println("inputsObject");
-				System.out.println(inputsObject);
 				for(int i=0;i<inputsObject.size();i++)
 				{
 					//Get input Type
@@ -184,20 +159,17 @@ public class ReadJSONExample
 							String _retval=intgen.GenerateInteger(vartype);
 							st.addInpType(vartype);
 							st.addInpValues(_retval);
-							//inputList.put(vartype,_retval);
 						}
 						else if(vartype.equals("String") || vartype.equals("string")) {
 							String _retval=strgen.stringGenerator();
 							st.addInpType(vartype);
 							st.addInpValues(_retval);
-							//inputList.put(vartype,_retval);
 						}
 						else if(vartype.contains("bytes")) {
 							int[] intret=bytgen.byteGeneratorNew(vartype);
 							String _retval=Arrays.toString(intret);
 							btype =false;
 							st.addInpType(vartype);
-							//st.addInpValues(_retval);
 							st.addInpValues2(_retval);
 						}
 						else if(vartype.contains("byte") && btype) {
@@ -206,14 +178,13 @@ public class ReadJSONExample
 								int[] intret=bytgen.byteGeneratorNew(vartype);
 								String _retval=Arrays.toString(intret);
 								st.addInpType(vartype);
-								//st.addInpValues(_retval);
+								
 								st.addInpValues2(_retval);
 							}
 							else {
 								int[] intret=bytgen.byteGeneratorNew("bytes1");
 								String _retval=Arrays.toString(intret);
 								st.addInpType(vartype);
-								//st.addInpValues(_retval);
 								st.addInpValues2(_retval);
 							}
 						}
@@ -221,20 +192,16 @@ public class ReadJSONExample
 							String _retval=boolgen.boolGenerator();
 							st.addInpType(vartype);
 							st.addInpValues(_retval);
-							//inputList.put(vartype,_retval);
+
 						}
 						
 						else if(vartype.equals("address") || vartype.equals("Address")) {
 							
-							if(vartype.contains("[]")) {
-								System.out.println(addgen.addressGeneratorList());
-							}
-							else{
+							if(!(vartype.contains("[]"))) {
 								String add= addgen.addressGenerator();
-								System.out.println(add);
 							}
 						}
-						System.out.println(vartype);
+						
 					}
 				}
 			}
@@ -249,10 +216,8 @@ public class ReadJSONExample
 	{
 		try {
 			String functionType = (String) f_Type.get("type");
-			//String type=(String)functionType.get("type");
 			st.addFunType(functionType);
-			//inputList.put("functionType", functionType);
-			System.out.println(functionType);
+
 		}
 		catch (Exception e) {
 			throw e;
@@ -264,11 +229,8 @@ public class ReadJSONExample
 	{
 		try {
 			String functionName = (String) f_Name.get("name");
-			//String type=(String)functionType.get("type");
+			
 			st.addName(functionName);
-			//inputList.put("functionName", functionName);
-			//System.out.println(inputList);
-
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -278,10 +240,9 @@ public class ReadJSONExample
 	{
 		try {
 			String stateMutability = (String) state.get("stateMutability");
-			//String type=(String)functionType.get("type");
+
 			st.addStateMu(stateMutability);
-			//inputList.put("functionName", functionName);
-			//System.out.println(inputList);
+
 
 			
 		} catch (Exception e) {
@@ -291,15 +252,10 @@ public class ReadJSONExample
 	private static void parsePayableField(JSONObject state)
 	{
 		try {
-			System.out.println("BURDAYIM");
-			System.out.println(state);
-			
+
 			Boolean payableState = (Boolean) state.get("payable");
-			System.out.println(payableState);
-			//String type=(String)functionType.get("type");
+			
 			st.addPayable(payableState.toString());
-			//inputList.put("functionName", functionName);
-			//System.out.println(inputList);
 
 			
 		} catch (Exception e) {

@@ -7,7 +7,7 @@ import java.util.List;
 public final class StructType {
 	
 	public String bytearr;
-	//public Integer bytearr2;
+	
 	public List<String> getNames() {
 		return names;
 	}
@@ -55,17 +55,14 @@ public final class StructType {
 	{
 		String newinpArr=inpArr.substring(1, inpArr.length()-1);
 		String[] strArr=newinpArr.split(",");
-		//Integer[] tetetet = new Integer[strArr.length];
-		for(int i=0;i<strArr.length;i++)
-		{
-				//strArr[i]="\""+strArr[i]+"\"";
+		
+		for(int i=0;i<strArr.length;i++){
 			byteint.add(Integer.parseInt(strArr[i].trim()));
 		}
 		
 		 bytearr= Arrays.deepToString(strArr);
 		
 		this.inpValues.add(bytearr);
-		//this.testint.add(e)
 		
 	}
 	public void addStateMu(String stateMu)
