@@ -36,7 +36,7 @@ public class WritetoJsonFile {
 			StructType stt = iter.next();
 	
 			//View functions will not added to input type
-			if(stt.getstateMut().size()>=1 )
+			if(stt.getstateMut().size()>=1 && stt.getstateMut().get(0)!=null)
 			{
 				if(stt.getstateMut().get(0).equals("view"))
 				{
