@@ -199,6 +199,8 @@ public class ReadJSONExample
 							
 							if(!(vartype.contains("[]"))) {
 								String add= addgen.addressGenerator();
+								st.addInpType(vartype);
+								st.addInpValues(add);
 							}
 						}
 						
