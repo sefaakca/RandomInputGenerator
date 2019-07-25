@@ -44,21 +44,21 @@ public class ReadJSONExample
 	{
 		//JSON parser object to parse read file
 		JSONParser jsonParser = new JSONParser();
-		if(args.length<=4)
+		if(args.length<=3)
 		{
 			System.out.println("Please give your abi, ContractName, opcode and bytecode files as input!!");
 			return;
 		}
 		String fileName = args[0];
 		String contractName = args[1];
-		Path opcodesPath =Paths.get(args[2]);
-		Path bytecodesPath = Paths.get(args[3]);
-		String output_file = args[4];
+		//Path opcodesPath =Paths.get(args[2]);
+		Path bytecodesPath = Paths.get(args[2]);
+		String output_file = args[3];
 		
 		try (FileReader reader = new FileReader(fileName))
 		{
 			
-			List<String> opcodes = Files.readAllLines(opcodesPath);
+			//List<String> opcodes = Files.readAllLines(opcodesPath);
 			List<String> bytecodes = Files.readAllLines(bytecodesPath);
 
 			
@@ -96,7 +96,7 @@ public class ReadJSONExample
             	abiListRef.add(jsonValues.get(i));
             }
 
-            for(int test=0;test<20;test++) {
+            for(int test=0;test<100;test++) {
 	            for(int i=0;i<abiListRef.size();i++)
 	            {
 	            	JSONObject teststst= (JSONObject)abiListRef.get(i);
@@ -108,7 +108,7 @@ public class ReadJSONExample
 		            	parseStateMutability(((JSONObject)abiListRef.get(i)));
 		            	parsePayableField(((JSONObject)abiListRef.get(i)));
 		            	inputList.add(st);
-						_writeJson.WriteJSONFile(abiListRef,inputList,contractName,opcodes,bytecodes);
+						_writeJson.WriteJSONFile(abiListRef,inputList,contractName,bytecodes);
 						st.clear();
 						inputList.clear();
 	            	} else if(!teststst.get("type").equals("constructor")) {
@@ -118,7 +118,7 @@ public class ReadJSONExample
 		            	parseStateMutability(((JSONObject)abiListRef.get(i)));
 		            	parsePayableField(((JSONObject)abiListRef.get(i)));
 		            	inputList.add(st);
-						_writeJson.WriteJSONFile(abiListRef,inputList,contractName,opcodes,bytecodes);
+						_writeJson.WriteJSONFile(abiListRef,inputList,contractName,bytecodes);
 						st.clear();
 						inputList.clear();
 	            	}
@@ -156,38 +156,65 @@ public class ReadJSONExample
 					{
 						String vartype =inputType.get("type").toString();
 						if(vartype.contains("int")) {
-							String _retval=intgen.GenerateInteger(vartype);
-							st.addInpType(vartype);
-							st.addInpValues(_retval);
-						}
-						else if(vartype.equals("String") || vartype.equals("string")) {
-							String _retval=strgen.stringGenerator();
-							st.addInpType(vartype);
-							st.addInpValues(_retval);
-						}
-						else if(vartype.contains("bytes")) {
-							int[] intret=bytgen.byteGeneratorNew(vartype);
-							String _retval=Arrays.toString(intret);
-							btype =false;
-							st.addInpType(vartype);
-							st.addInpValues2(_retval);
-						}
-						else if(vartype.contains("byte") && btype) {
-							
-							if(vartype.contains("[]")) {
-								int[] intret=bytgen.byteGeneratorNew(vartype);
+							if(vartype.contains("["))
+							{
+								int[] intret=intgen.GenerateIntegerArray(vartype);
 								String _retval=Arrays.toString(intret);
 								st.addInpType(vartype);
 								
-								st.addInpValues2(_retval);
+								st.addInpValues2(_retval,vartype);
+							}
+							else
+							{
+								String _retval=intgen.GenerateInteger(vartype);
+								st.addInpType(vartype);
+								st.addInpValues(_retval);
+							}
+						}
+						else if(vartype.contains("String") || vartype.contains("string")) {
+								String _retval=strgen.stringGenerator();
+								st.addInpType(vartype);
+								st.addInpValues(_retval);
+							
+						}
+						else if(vartype.contains("byte")) {
+							String[] intret=bytgen.byteGeneratorNewArray(vartype);
+							String _retval=Arrays.toString(intret);
+							st.addInpType(vartype);
+							
+							st.addInpValues2(_retval,vartype);
+							/*if(vartype.contains("[")) {
+								String[] intret=bytgen.byteGeneratorNewArray(vartype);
+								String _retval=Arrays.toString(intret);
+								st.addInpType(vartype);
+								
+								st.addInpValues2(_retval,vartype);
+							}
+							else {
+								int[] intret=bytgen.byteGeneratorNew(vartype);
+								String _retval=Arrays.toString(intret);
+								btype =false;
+								st.addInpType(vartype);
+								st.addInpValues2(_retval,vartype);
+							}*/
+							
+						}
+						/*else if(vartype.contains("byte") && btype) {
+							
+							if(vartype.contains("[")) {
+								String[] intret=bytgen.byteGeneratorNewArray(vartype);
+								String _retval=Arrays.toString(intret);
+								st.addInpType(vartype);
+								
+								st.addInpValues2(_retval,vartype);
 							}
 							else {
 								int[] intret=bytgen.byteGeneratorNew("bytes1");
 								String _retval=Arrays.toString(intret);
 								st.addInpType(vartype);
-								st.addInpValues2(_retval);
+								st.addInpValues2(_retval,vartype);
 							}
-						}
+						}*/
 						else if(vartype.equals("bool") || vartype.equals("Bool")) {
 							String _retval=boolgen.boolGenerator();
 							st.addInpType(vartype);
@@ -195,13 +222,19 @@ public class ReadJSONExample
 
 						}
 						
-						else if(vartype.equals("address") || vartype.equals("Address")) {
+						else if(vartype.contains("address") || vartype.contains("Address")) {
 							
-							if(!(vartype.contains("[]"))) {
+							if(!(vartype.contains("["))) {
 								String add= addgen.addressGenerator();
 								st.addInpType(vartype);
 								st.addInpValues(add);
 							}
+							else {
+								String[] add= addgen.addressGeneratorList();
+								st.addInpType(vartype);
+								st.addInpValues2(Arrays.deepToString(add),vartype);
+							}
+								
 						}
 						
 					}
