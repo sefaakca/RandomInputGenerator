@@ -33,6 +33,8 @@ public final class StructType {
 	public List<String> inpValues = new ArrayList<String>();
 	public List<String> stateMut = new ArrayList<String>();
 	public List<Integer> byteint = new ArrayList<Integer>();
+	public List<Integer> intint = new ArrayList<Integer>();
+	public List<String> bytestrarr = new ArrayList<String>();
 	public List<String> payable = new ArrayList<String>();
 	
 	public void addName(String name)
@@ -51,14 +53,28 @@ public final class StructType {
 	{
 		this.inpValues.add(inpVal);
 	}
-	public void addInpValues2(String inpArr) 
+	public void addInpValues2(String inpArr,String type) 
 	{
 		String newinpArr=inpArr.substring(1, inpArr.length()-1);
 		String[] strArr=newinpArr.split(",");
-		
-		for(int i=0;i<strArr.length;i++){
-			byteint.add(Integer.parseInt(strArr[i].trim()));
-		}
+		if(type.contains("bytes")) {
+			for(int i=0;i<strArr.length;i++){
+				bytestrarr.add(strArr[i].trim());
+			}
+		}else if(type.contains("byte"))
+		{
+			for(int i=0;i<strArr.length;i++){
+				byteint.add(Integer.parseInt(strArr[i].trim()));
+			}
+		} else if (type.contains("int")) {
+			for(int i=0;i<strArr.length;i++){
+				intint.add(Integer.parseInt(strArr[i].trim()));
+			}
+		}/*else if(type.contains("address")||type.contains("Address")) {
+			for(int i=0;i<strArr.length;i++){
+				adrarr.add(strArr[i].trim());
+			}
+		}*/
 		
 		 bytearr= Arrays.deepToString(strArr);
 		
@@ -80,7 +96,9 @@ public final class StructType {
 		this.inpValues.clear();
 		this.stateMut.clear();
 		this.byteint.clear();
+		this.intint.clear();
 		this.payable.clear();
+		this.bytestrarr.clear();
 	}
 	
 	
