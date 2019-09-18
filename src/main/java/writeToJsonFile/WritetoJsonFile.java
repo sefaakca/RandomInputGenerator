@@ -26,11 +26,13 @@ public class WritetoJsonFile {
 	int idcounter = 0;
 	
 	@SuppressWarnings("unchecked")
-	public void WriteJSONFile(JSONArray test,ArrayList<StructType> val,String CName,List<String> opcodes,List<String> bytecodes)
+	public void WriteJSONFile(JSONArray test,ArrayList<StructType> val,String CName,List<String> bytecodes)
 	{
 		Iterator<StructType> iter = val.iterator(); 
 		
 		JSONArray _bytearradd = new JSONArray();
+		JSONArray _intarradd = new JSONArray();
+		JSONArray _bytesarradd = new JSONArray();
 		while(iter.hasNext())
 		{
 			StructType stt = iter.next();
@@ -108,7 +110,16 @@ public class WritetoJsonFile {
 			//More than one parameters
 			for(int k=0;k<stt.getinpValues().size();k++)
 			{
-				if(stt.getInpType().get(k).contains("byte"))
+				if(stt.getInpType().get(k).contains("bytes"))
+				{
+					for(int i =0;i<stt.bytestrarr.size();i++)
+					{
+						String prs2str = stt.bytestrarr.get(i);
+						_bytesarradd.add(prs2str);
+					}
+					parameters.add(_bytesarradd);
+					
+				} else if(stt.getInpType().get(k).contains("byte"))
 				{
 					for(int i =0;i<stt.byteint.size();i++)
 					{
@@ -116,11 +127,29 @@ public class WritetoJsonFile {
 						_bytearradd.add(prs2str);
 					}
 					parameters.add(_bytearradd);
-				}
+					
+				} else if(stt.getInpType().get(k).contains("int")){
+					
+					if(stt.getInpType().get(k).contains("[")) {
+						for(int i =0;i<stt.intint.size();i++)
+						{
+							String prs2str = Integer.toString(stt.intint.get(i));
+							_intarradd.add(prs2str);
+						}
+						parameters.add(_intarradd);
+
+					}
+					else {
+						parameters.add(stt.getinpValues().get(k));
+					}
+					
+				} 
 				else
 				{
 					parameters.add(stt.getinpValues().get(k));
 				}
+				
+				
 			}
 
 				
@@ -139,7 +168,8 @@ public class WritetoJsonFile {
 					
 				//byte-code added to recordDetails
 				recordDetails.put("bytecode", bytecodes.get(0));
-				recordDetails.put("opcodes",opcodes.get(0));	
+				//recordDetails.put("opcodes",opcodes.get(0));
+				recordDetails.put("name","");
 				//Link references object is created
 				JSONObject linkreferencesinRecord = new JSONObject();
 					
@@ -155,6 +185,7 @@ public class WritetoJsonFile {
 			
 			//More than one input type will be added according to format
 			boolean inp=true;
+			
 			for(int r=0;r<stt.getInpType().size();r++)
 			{
 				if(r==stt.getInpType().size()-1)
