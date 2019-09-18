@@ -22,5 +22,5 @@ solc --bin contract.sol >> bytecode_file.txt
 To generate ABI file:
 ```bash
 solc --abi contract.sol >> abi_file.abi
-```
+``` 
 
