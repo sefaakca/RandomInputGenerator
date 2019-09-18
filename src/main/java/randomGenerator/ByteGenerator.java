@@ -18,6 +18,7 @@ public class ByteGenerator {
 		int blen=0;
 		if(_mnum.find()) {
 			blen=Integer.parseInt(_mnum.group());
+			
 			bytes = new byte[blen];
 		}
 		else{
@@ -58,6 +59,40 @@ public class ByteGenerator {
 		}
 		
 		return ints;
+	}
+	
+	public String[] byteGeneratorNewArray(String _type)
+	{
+		String[] bytes;
+		String pattern ="\\[[^\\d]*(\\d+)[^\\d]*\\]";
+		Pattern p = Pattern.compile(pattern,Pattern.MULTILINE);
+		Matcher _mnum=p.matcher(_type);
+		int blen=0;
+		if(_mnum.find()) {
+			String match = _mnum.group();
+			match =match.replace("[", "");
+			match = match.replace("]", "");
+			blen= Integer.parseInt(match);
+			bytes = new String[blen];
+			_type=_type.substring(0,_type.length()-(match.length()+2));
+			
+			
+		}
+		else{
+			bytes= new String[10];
+		}
+		try {
+			
+			for(int i=0;i<bytes.length;i++) {
+				bytes[i] ="0x"+Integer.toString(random.nextInt(20)+10);
+				
+			}
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		
+		return bytes;
 	}
 	
 
