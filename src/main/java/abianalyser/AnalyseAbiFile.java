@@ -23,16 +23,16 @@ import randomGenerator.BooleanGenerator;
 import randomGenerator.ByteGenerator;
 import randomGenerator.IntegerGenerator;
 import randomGenerator.StringGenerator;
-import writeToJsonFile.WritetoJsonFile;
+import writeToJsonFile.GenerateTestFile;
 
-public class ReadJSONExample 
+public class AnalyseAbiFile 
 {
 	public static IntegerGenerator intgen = new IntegerGenerator();
 	public static StringGenerator strgen = new StringGenerator();
 	public static ByteGenerator bytgen = new ByteGenerator();
 	public static BooleanGenerator boolgen = new BooleanGenerator();
 	public static AdressGenerator addgen = new AdressGenerator();
-	public static WritetoJsonFile _writeJson = new WritetoJsonFile();
+	public static GenerateTestFile _writeJson = new GenerateTestFile();
 	
 	public static JSONArray abiListRef= new JSONArray();
 	

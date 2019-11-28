@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 
 import abianalyser.StructType;
 
-public class WritetoJsonFile {
+public class GenerateTestFile {
 	public String str="(";
 	
 	public Random rnd = new Random();
