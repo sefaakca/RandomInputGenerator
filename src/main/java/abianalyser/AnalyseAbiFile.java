@@ -18,12 +18,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import GenerateTestFile.GenerateTestFile;
 import randomGenerator.AdressGenerator;
 import randomGenerator.BooleanGenerator;
 import randomGenerator.ByteGenerator;
 import randomGenerator.IntegerGenerator;
 import randomGenerator.StringGenerator;
-import writeToJsonFile.GenerateTestFile;
 
 public class AnalyseAbiFile 
 {
@@ -183,38 +183,7 @@ public class AnalyseAbiFile
 							st.addInpType(vartype);
 							
 							st.addInpValues2(_retval,vartype);
-							/*if(vartype.contains("[")) {
-								String[] intret=bytgen.byteGeneratorNewArray(vartype);
-								String _retval=Arrays.toString(intret);
-								st.addInpType(vartype);
-								
-								st.addInpValues2(_retval,vartype);
-							}
-							else {
-								int[] intret=bytgen.byteGeneratorNew(vartype);
-								String _retval=Arrays.toString(intret);
-								btype =false;
-								st.addInpType(vartype);
-								st.addInpValues2(_retval,vartype);
-							}*/
-							
 						}
-						/*else if(vartype.contains("byte") && btype) {
-							
-							if(vartype.contains("[")) {
-								String[] intret=bytgen.byteGeneratorNewArray(vartype);
-								String _retval=Arrays.toString(intret);
-								st.addInpType(vartype);
-								
-								st.addInpValues2(_retval,vartype);
-							}
-							else {
-								int[] intret=bytgen.byteGeneratorNew("bytes1");
-								String _retval=Arrays.toString(intret);
-								st.addInpType(vartype);
-								st.addInpValues2(_retval,vartype);
-							}
-						}*/
 						else if(vartype.equals("bool") || vartype.equals("Bool")) {
 							String _retval=boolgen.boolGenerator();
 							st.addInpType(vartype);

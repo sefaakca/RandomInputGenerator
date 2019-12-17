@@ -1,4 +1,4 @@
-package writeToJsonFile;
+package GenerateTestFile;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -49,7 +49,7 @@ else
 fi
 
 
-java -jar ABIAnalyser.jar $abi_file $file_name $opcode_file $bytecode_file $output_file
+java -jar RandomInputGenerator.jar $abi_file $file_name $opcode_file $bytecode_file $output_file
 
 echo "DONE FOR $d"
 done
