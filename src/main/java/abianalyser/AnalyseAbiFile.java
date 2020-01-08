@@ -54,7 +54,8 @@ public class AnalyseAbiFile
 		//Path opcodesPath =Paths.get(args[2]);
 		Path bytecodesPath = Paths.get(args[2]);
 		String output_file = args[3];
-		
+		//timer started
+		long startTime = System.currentTimeMillis();
 		try (FileReader reader = new FileReader(fileName))
 		{
 			
@@ -126,7 +127,11 @@ public class AnalyseAbiFile
             }
           
             _writeJson.FinalWrite(abiListRef,output_file);
-
+          //timer stopped
+            long stopTime = System.currentTimeMillis();
+            
+            long elapsedTime = stopTime - startTime;
+            System.out.println("TIME TAKEN: " + elapsedTime);
             
             System.out.println(contractName);
             
