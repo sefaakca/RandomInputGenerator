@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>SolidityRandomTestGenerator</groupId>
-	<artifactId>ABIANALYSER</artifactId>
+	<artifactId>Random_Input_Generator</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>ABIAnalyser</name>
+	<name>Random_Input_Generator</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>

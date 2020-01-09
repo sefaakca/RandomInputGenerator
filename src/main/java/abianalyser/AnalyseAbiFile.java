@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -39,8 +42,11 @@ public class AnalyseAbiFile
 	public static ArrayList<StructType> inputList = new ArrayList<StructType>();
 	public static StructType st = new StructType();
 	
+	 public static Logger logger = Logger.getLogger("MyLog");  
+	 public static FileHandler fh;
+	
 	@SuppressWarnings("unchecked")
-	public static void main(String[] args) 
+	public static void main(String[] args) throws SecurityException, IOException 
 	{
 		//JSON parser object to parse read file
 		JSONParser jsonParser = new JSONParser();
@@ -54,6 +60,13 @@ public class AnalyseAbiFile
 		//Path opcodesPath =Paths.get(args[2]);
 		Path bytecodesPath = Paths.get(args[2]);
 		String output_file = args[3];
+		
+		fh = new FileHandler("Random_Algorithm_Time.log",true);  
+        logger.addHandler(fh);
+        SimpleFormatter formatter = new SimpleFormatter();  
+        fh.setFormatter(formatter);
+        
+        
 		//timer started
 		long startTime = System.currentTimeMillis();
 		try (FileReader reader = new FileReader(fileName))
@@ -132,7 +145,7 @@ public class AnalyseAbiFile
             
             long elapsedTime = stopTime - startTime;
             System.out.println("TIME TAKEN: " + elapsedTime);
-            
+            logger.info(contractName + ": " + elapsedTime);
             System.out.println(contractName);
             
         } catch (FileNotFoundException e) {
