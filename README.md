@@ -1,4 +1,4 @@
-#Input Generator
+## Input Generator
 
 I built an automated input generation tool for smart contracts that provides inputs for all transactions and functions in a contract.
 
